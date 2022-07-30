@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.ReportsView">
+    <ContentPage.Content>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" BackgroundColor="#003057" Padding="5" CornerRadius="0">
+                <Label Text="Reports" FontSize="36" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" TextColor="White"/>
+            </Frame>
+            <StackLayout Grid.Row="1">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Search End Date: " FontSize="Small" VerticalOptions="Center"/>
+                    <DatePicker x:Name="dpEnd" MinimumWidthRequest="150" WidthRequest="300" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Frame VerticalOptions="End" x:Name="CourseEnd" HorizontalOptions="FillAndExpand" BorderColor="#003057" CornerRadius="5" WidthRequest="125" HeightRequest="15" Padding="15" Margin="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CourseEndClickCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference CourseEnd}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" Text="Ended Courses" HorizontalOptions="CenterAndExpand" Padding="0" FontSize="Medium" FontAttributes="Bold,Italic" Margin="0,-12,0,0"/>
+                    </Frame>
+                    <Frame VerticalOptions="End" x:Name="CoursesCompleted" HorizontalOptions="FillAndExpand" BorderColor="#003057" CornerRadius="5" WidthRequest="125" HeightRequest="15" Padding="15" Margin="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CoursesCompletedClickCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference CoursesCompleted}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" Text="Courses Completed" HorizontalOptions="CenterAndExpand" Padding="0" FontSize="Medium" FontAttributes="Bold,Italic" Margin="0,-12,0,0"/>
+                    </Frame>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Frame VerticalOptions="End" x:Name="AssessmentEnd" HorizontalOptions="FillAndExpand" BorderColor="#003057" CornerRadius="5" WidthRequest="125" HeightRequest="15" Padding="15" Margin="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AssessmentEndClickCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference AssessmentEnd}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" Text="Ended Assessments" HorizontalOptions="CenterAndExpand" Padding="0" FontSize="Medium" FontAttributes="Bold,Italic" Margin="0,-12,0,0"/>
+                    </Frame>
+                    <Frame VerticalOptions="End" x:Name="AllCourses" HorizontalOptions="FillAndExpand" BorderColor="#003057" CornerRadius="5" WidthRequest="125" HeightRequest="15" Padding="15" Margin="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AllCoursesClickCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference AllCourses}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" Text="All Courses" HorizontalOptions="CenterAndExpand" Padding="0" FontSize="Medium" FontAttributes="Bold,Italic" Margin="0,-12,0,0"/>
+                    </Frame>
+                </StackLayout>
+                <Frame HorizontalOptions="FillAndExpand" BorderColor="#003057">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" BindingContext="{Binding headerText}">
+                        <Label Text="{Binding [0]}" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="{Binding [1]}" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="{Binding [2]}" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="{Binding [3]}" HorizontalOptions="FillAndExpand" IsVisible="{Binding [3]}"/>
+                    </StackLayout>
+                </Frame>
+                <ListView ItemsSource="{Binding reportData}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                    <Label Text="{Binding [0]}" HorizontalOptions="FillAndExpand"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [1], StringFormat='{}{0:MM/dd/yy}'}" HorizontalOptions="FillAndExpand"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [2], StringFormat='{}{0:MM/dd/yy hh:mm tt}'}" HorizontalOptions="FillAndExpand"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [3]}" HorizontalOptions="FillAndExpand"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

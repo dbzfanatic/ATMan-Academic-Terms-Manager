@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmods="clr-namespace:C868.ViewModels" xmlns:views="clr-namespace:C868.Views"
+             x:Class="C868.Views.TermsManagerOverview"
+             Title="Terms Manager"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame BackgroundColor="#003057" Padding="24" CornerRadius="0">
+                <Label Text="Academic Terms" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
+            </Frame>            
+            <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Always" Grid.Row="1">
+                <StackLayout Padding="0">
+                    <Frame x:Name="addTerm" Grid.Row="1" BorderColor="#327da9" BackgroundColor="Transparent" Padding="0" VerticalOptions="Start">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddTermCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference addTerm}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="#ABABAB" Padding="0" Margin="0,0,0,5">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Add New Term" FontAttributes="Bold,Italic"/>
+                                    <Span Text="&#x09;"/>
+                                    <Span Text="+" FontSize="Large"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Frame>
+                    <CollectionView x:Name="termCol" ItemsSource="{Binding Term}">                        
+                        <CollectionView.EmptyView>
+                            <Label Text="No terms currently created" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                        </CollectionView.EmptyView>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                <views:AccordionView Title="{Binding Name}" Margin="0,0,0,0" BorderColor="#327da9" CenterLeft="{Binding Start, StringFormat='{}{0:MM/dd/yy }'}" Center=" - " CenterRight="{Binding End, StringFormat='{}{0:MM/dd/yy }'}">
+                                    <views:AccordionView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=BindingContext.EditTermCommand}" CommandParameter="{Binding ID}" NumberOfTapsRequired="2"/>
+                                    </views:AccordionView.GestureRecognizers>
+                                    <views:AccordionView.IndicatorView>
+                                        <Label Text="V" TextColor="White"/>
+                                        </views:AccordionView.IndicatorView>
+                                    <views:AccordionView.AccordionContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                    <StackLayout BindableLayout.ItemsSource="{Binding Path=Courses}" Padding="0">
+                                                        <BindableLayout.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackLayout>
+                                                                    <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=BindingContext.OpenCourse}" CommandParameter="{Binding ID}"/>
+                                                        </StackLayout.GestureRecognizers>
+                                                        <views:AccordionView Title="{Binding Title}" CenterText="{Binding Status}" CenterLeft="{Binding Start, StringFormat='{}{0:MM/dd/yy }'}" Center=" - " CenterRight="{Binding End, StringFormat='{}{0:MM/dd/yy }'}" FontSize="Medium" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0">
+                                                                        <views:AccordionView.IndicatorView>
+                                                                <Label Text="V" TextColor="White"/>
+                                                                        </views:AccordionView.IndicatorView>
+                                                                        <views:AccordionView.AccordionContentView>
+                                                                                <StackLayout Padding="0" Spacing="10">
+                                                                    <StackLayout.GestureRecognizers>
+                                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=BindingContext.OpenCourse}" CommandParameter="{Binding ID}"/>
+                                                                    </StackLayout.GestureRecognizers>
+                                                                                    <Label VerticalOptions="Center" FontSize="Micro" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" FontAttributes="Italic">
+                                                                                        <Label.FormattedText>
+                                                                                            <FormattedString>
+                                                                                                <Span Text="{Binding instName}"/>
+                                                                                                <Span Text=" "/>
+                                                                                                <Span Text="{Binding instPHone}"/>
+                                                                                                <Span Text=" "/>
+                                                                                                <Span Text="{Binding insteMail}"/>
+                                                                                                <Span Text=" "/>
+                                                                                                <Span Text="{Binding End, StringFormat='{}{0:MM/dd/yy}'}" FontSize="Micro" FontAttributes="Bold"/>
+                                                                                            </FormattedString>
+                                                                                        </Label.FormattedText>
+                                                                                    </Label>
+                                                                                    <ScrollView Orientation="Vertical" HeightRequest="80" VerticalScrollBarVisibility="Always" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                                                                        <Label Text="{Binding Notes[0].noteText}"/>
+                                                                                    </ScrollView>
+                                                                                </StackLayout>
+                                                                        </views:AccordionView.AccordionContentView>
+                                                                    </views:AccordionView>
+                                                                </StackLayout>
+                                                            </DataTemplate>
+
+                                                        </BindableLayout.ItemTemplate>
+
+                                                    </StackLayout>
+                                        </views:AccordionView.AccordionContentView>
+                                    </views:AccordionView>
+                            </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    <Label Text="End of Terms content" FontSize="Medium" TextColor="Black" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Opacity=".65"/>
+                </StackLayout>
+                
+            </ScrollView>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

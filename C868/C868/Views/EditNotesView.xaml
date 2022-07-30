@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.EditNotesView"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content >
+        <StackLayout HeightRequest="100" Opacity=".4">
+            <Label Text="Note Contents:" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+            <ScrollView VerticalScrollBarVisibility="Always" Orientation="Vertical">
+                <Editor x:Name="eText" Text="{Binding nText}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" MinimumHeightRequest="105" MinimumWidthRequest="205"/>
+            </ScrollView>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" HeightRequest="65" WidthRequest="65" HorizontalOptions="Start" VerticalOptions="End" Opacity=".7" FontSize="Micro" Clicked="CancelNote"/>
+                <Label HorizontalOptions="CenterAndExpand"/>
+                <Button Text="Ok" HeightRequest="65" WidthRequest="65" HorizontalOptions="End" VerticalOptions="End" Opacity=".7" Clicked="SaveNote"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

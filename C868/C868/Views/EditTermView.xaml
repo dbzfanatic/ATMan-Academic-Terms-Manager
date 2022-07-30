@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.EditTermView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height=".3*"/>
+                </Grid.RowDefinitions>
+                <Frame Grid.Row="0" BackgroundColor="#003057" Padding="24" CornerRadius="0">
+                    <StackLayout Orientation="Horizontal" Spacing="0" Padding="0" HorizontalOptions="Center">
+                        <Label Text="Edit " HorizontalTextAlignment="Center" TextColor="White" FontSize="36" IsVisible="{Binding tName}"/>
+                        <Label Text="{Binding tName,FallbackValue=Add New Term}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
+                    </StackLayout>
+                </Frame>
+                <StackLayout Padding="0" Spacing="10" Grid.Row="1">
+                    <StackLayout Grid.Row="2" Orientation="Horizontal" Padding="0" Spacing="15"  VerticalOptions="Start">
+                        <Label Text="Term Name:"  VerticalOptions="Center"/>
+                        <Entry x:Name="eTermname" Text="{Binding tName}" WidthRequest="260" HeightRequest="40"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Start Date:" FontSize="Medium" VerticalOptions="Center"/>
+                        <DatePicker x:Name="dpStartTerm" HorizontalOptions="Start" Date="{Binding tStart}" MaximumDate="{Binding Source={x:Reference dpEndTerm},Path=Date}"/>
+                        <Label Text="" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="End Date: " FontSize="Medium" VerticalOptions="Center"/>
+                        <DatePicker x:Name="dpEndTerm" HorizontalOptions="End" Date="{Binding tEnd}"/>
+                    </StackLayout>
+                    <StackLayout x:Name="courseListLayout" BindableLayout.ItemsSource="{Binding tCourseList}" VerticalOptions="FillAndExpand">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                    <StackLayout Spacing="10">
+                                        <Frame BorderColor="#327da9" Padding="5" BackgroundColor="Transparent">
+                                        <StackLayout Orientation="Horizontal" Spacing="0" Padding="0">
+                                        <Label Text="{Binding Title}" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding Status}" HorizontalOptions="CenterAndExpand" FontAttributes="Italic" FontSize="Medium" Opacity=".65"/>
+                                        <Label FontAttributes="Bold,Italic" HorizontalOptions="End">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                        <Span Text="{Binding Start, StringFormat='{}{0:MM/dd/yy}'}"/>
+                                                        <Span Text=" - "/>
+                                                        <Span Text="{Binding End, StringFormat='{}{0:MM/dd/yy}'}"/>
+                                                    </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        </StackLayout>
+                                    </Frame>
+                                    </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="4" Padding="5,0,5,5" VerticalOptions="End">
+                    <Button Text="Cancel" WidthRequest="85" HeightRequest="45" CornerRadius="30" HorizontalOptions="Start" Clicked="Cancel_Clicked"/>
+                    <Label Text="" HorizontalOptions="CenterAndExpand"/>
+                    <Button Text="Add Course" WidthRequest="115" HeightRequest="45" CornerRadius="30" HorizontalOptions="Center" FontSize="Small" FontAttributes="Bold" Clicked="AddCourse_Clicked"/>
+                    <Button Text="Save" WidthRequest="85" HeightRequest="45" CornerRadius="30" HorizontalOptions="End" Clicked="Save_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

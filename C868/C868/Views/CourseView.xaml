@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:C868="clr-namespace:C868" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:viewmods="clr-namespace:C868.ViewModels"
+             x:Class="C868.Views.CourseView"
+             x:Name="courseView"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <viewmods:BindingTrueConverter x:Key="BindingTrue"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".2*"/>
+                <RowDefinition Height=".15*"/>
+                <RowDefinition Height=".40*"/>
+                <RowDefinition Height=".15*"/>
+                <RowDefinition Height=".10*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" BackgroundColor="#003057" Padding="5" CornerRadius="0">
+                <StackLayout>
+                    <Label x:Name="lblTitle" Text="{Binding Title,FallbackValue=New Course}" HorizontalTextAlignment="Center" TextColor="White" FontSize="Title">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditCourseTitleDT}" NumberOfTapsRequired="2" CommandParameter="{Binding ID}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label x:Name="lblName" Text="{Binding InstName,FallbackValue=Instructor Name}" HorizontalTextAlignment="Center" TextColor="White" FontSize="Subtitle">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditCourseInstDT}" NumberOfTapsRequired="2" CommandParameter="{Binding ID}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label x:Name="lblPhone" Text="{Binding InstPhone,FallbackValue=Instructor Phone}" HorizontalTextAlignment="Center" TextColor="White" FontSize="Caption" TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PhoneClickCommand}" CommandParameter="{Binding Source={x:Reference lblPhone},Path=Text}"/>
+                            <TapGestureRecognizer Command="{Binding EditCoursePhoneDT}" CommandParameter="{Binding ID}" NumberOfTapsRequired="2"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label x:Name="lblEmail" Text="{Binding InstEMail,FallbackValue=Instructor Email}" HorizontalTextAlignment="Center" TextColor="White" FontSize="Caption" TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EmailClickCommand}" CommandParameter="{Binding Source={x:Reference lblEmail},Path=Text}"/>
+                            <TapGestureRecognizer Command="{Binding EditCourseEmailDT}" CommandParameter="{Binding ID}" NumberOfTapsRequired="2"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </Frame>
+            <StackLayout Grid.Row="1" Spacing="0">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Start Date:" FontSize="Medium"/>
+                    <Label Text="Status:" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="End Date: " FontSize="Medium"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <DatePicker x:Name="dpStartCourse" HorizontalOptions="Start" Date="{Binding Start}" MaximumDate="{Binding Source={x:Reference dpEndCourse},Path=Date}"/>
+                    <C868:FixedPicker x:Name="Status" HorizontalOptions="CenterAndExpand" SelectedItem="{Binding Status}">
+                        <C868:FixedPicker.Items>
+                            <x:String>Waiting</x:String>
+                            <x:String>Started</x:String>
+                            <x:String>In-Progress</x:String>
+                            <x:String>Testing</x:String>
+                            <x:String>Completed</x:String>
+                        </C868:FixedPicker.Items>
+                    </C868:FixedPicker>
+                    <DatePicker x:Name="dpEndCourse" HorizontalOptions="End" Date="{Binding End}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <Label Text="Notify of Start Date:" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    <CheckBox x:Name="chkStartNotify" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Color="#327da9" CheckedChanged="chkStartNotify_CheckedChanged" IsChecked="{Binding NotifyStart}"/>
+                    <Label HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Notify of End Date:" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
+                    <CheckBox x:Name="chkEndNotify" HorizontalOptions="End" VerticalOptions="CenterAndExpand" Color="#327da9" CheckedChanged="chkEndNotify_CheckedChanged" IsChecked="{Binding NotifyEnd}"/>
+                </StackLayout>
+            </StackLayout>
+            <ScrollView x:Name="notesGrid" Grid.Row="2">
+                <StackLayout Spacing="0">
+                    <Frame x:Name="addNote" BorderColor="#327da9" BackgroundColor="Transparent" Padding="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddNoteCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference addNote}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="#ABABAB" Padding="0,0,0,0" >
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Add Note&#x09;&#x09;" FontAttributes="Italic"/>
+                                    <Span Text="+" FontSize="Large"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Frame>
+                    <ScrollView VerticalScrollBarVisibility="Always" Orientation="Vertical">
+                        <StackLayout x:Name="notesView" BindableLayout.ItemsSource="{Binding Notes}" VerticalOptions="StartAndExpand">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout HeightRequest="80">
+                                        <ScrollView x:Name="notesScroll" VerticalScrollBarVisibility="Always" Orientation="Vertical" HeightRequest="80" Padding="0,10,0,0">
+                                            <Frame x:Name="notesFrame" BorderColor="#327da9" BackgroundColor="Transparent" Padding="10">
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                                    <Label x:Name="lblNote" VerticalOptions="Start" Text="{Binding Path=noteText}" HorizontalOptions="StartAndExpand">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding EditNoteCommand}" CommandParameter="{Binding Path=ID}" NumberOfTapsRequired="2"/>
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                    <Image Source="Share.png" WidthRequest="25" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="CenterAndExpand">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding ShareNoteCommand}" CommandParameter="{Binding Path=noteText}"/>
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+                                                </StackLayout>
+                                            </Frame>
+                                        </ScrollView>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="3" Spacing="10" Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Label Text="Assessments:" FontSize="Medium" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                <Frame x:Name="frmPA" BorderColor="#e6e6e6" BackgroundColor="Transparent" Padding="0">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditCourseTitleDT}" NumberOfTapsRequired="2"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditPerfAssessment}" CommandParameter="{Binding PerfAssess.ID}"/>
+                        </StackLayout.GestureRecognizers>
+                        <Label Text=" PA" FontAttributes="Italic,Bold" FontSize="Medium" Opacity=".45" HorizontalOptions="Start"/>
+                        <Label x:Name="lblPATitle"  Text="{Binding PerfAssess.Title, FallbackValue=Add Performance Assessment}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                        <Label x:Name="lblPADate"  Text="{Binding PerfAssess.End, StringFormat='{}{0:MM/dd/yy }'}" HorizontalOptions="End" FontAttributes="Italic" IsVisible="{Binding PerfAssess.ID, FallbackValue=False, Converter={StaticResource Key=BindingTrue}}" IsEnabled="{Binding Source={x:Reference frmPA},Path=IsVisible}"/>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="frmOA" BorderColor="#e6e6e6" BackgroundColor="Transparent" Padding="0">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditCourseTitleDT}" NumberOfTapsRequired="2"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditObjAssessment}" CommandParameter="{Binding ObjAssess.ID}"/>
+                        </StackLayout.GestureRecognizers>
+                        <Label Text=" OA" FontAttributes="Italic,Bold" FontSize="Medium" Opacity=".45" HorizontalOptions="Start"/>
+                        <Label x:Name="lblOATitle" Text="{Binding ObjAssess.Title, FallbackValue=Add Objective Assessment}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                        <Label x:Name="lblOADate" Text="{Binding ObjAssess.End, StringFormat='{}{0:MM/dd/yy hh:mm tt }'}" HorizontalOptions="End" FontAttributes="Italic" IsVisible="{Binding ObjAssess.ID, FallbackValue=False, Converter={StaticResource Key=BindingTrue}}" IsEnabled="{Binding Source={x:Reference frmOA},Path=IsVisible}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="4" Padding="5,0,5,5">
+                <Button Text="Delete" WidthRequest="175" HeightRequest="45" CornerRadius="30" HorizontalOptions="Start" Clicked="Delete_Clicked"/>
+                <Label HorizontalOptions="CenterAndExpand"/>
+                <Button Text="Save" WidthRequest="175" HeightRequest="45" CornerRadius="30" HorizontalOptions="End" Clicked="Save_Clicked"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

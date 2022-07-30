@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:C868="clr-namespace:C868" xmlns:viewmods="clr-namespace:C868.ViewModels"
+             x:Class="C868.Views.EditAssessmentView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <viewmods:ObjEnumToBoolConverter x:Key="ObjEnumToBool"/>
+            <viewmods:ShowOAConverter x:Key="ShowOA"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame BackgroundColor="#003057" Padding="24" CornerRadius="0">
+                <Label HorizontalTextAlignment="Center" TextColor="White" FontSize="36">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Assessment for "/>
+                            <Span Text="{Binding Course.Title}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Frame>
+            <StackLayout Grid.Row="1">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label Text="Assessment Type: " VerticalOptions="Center" FontAttributes="Bold"/>
+                    <C868:FixedPicker SelectedIndex="{Binding type}" IsEnabled="False">
+                        <C868:FixedPicker.Items>
+                            <x:String>Performance</x:String>
+                            <x:String>Objective</x:String>
+                        </C868:FixedPicker.Items>
+                    </C868:FixedPicker>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
+                    <Label Text="Assessment Name: " VerticalOptions="Center"/>
+                    <Entry x:Name="aName" Text="{Binding Name}" />
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Row="2">
+                <StackLayout Orientation="Horizontal" Margin="10,0,0,10" Grid.Row="2">
+                    <Label Text="Start Date: " VerticalOptions="Center"/>
+                    <DatePicker x:Name="dpStartAssess" Date="{Binding aStart}" MaximumDate="{Binding Source={x:Reference dpEndAssess},Path=Date}" Format="MM/dd/yyyy"/>
+                    <TimePicker x:Name="tpStartAssess" Time="{Binding aStart}" Format="hh:mm tt" IsVisible="{Binding type, Converter={StaticResource ShowOA}}"/>
+                    <Label Text="" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Notify?" VerticalOptions="Center"/>
+                    <CheckBox x:Name="chkASNotify" Color="#327da9" CheckedChanged="chkASNotify_CheckedChanged"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="10,0,0,10" IsVisible="{Binding type, Converter={StaticResource ObjEnumToBool}}">
+                        <Label Text="End Date: " VerticalOptions="Center"/>
+                        <DatePicker x:Name="dpEndAssess" Date="{Binding aEnd}" Format="MM/dd/yyyy"/>
+                        <Label Text="" HorizontalOptions="CenterAndExpand" Margin="-10,0,0,0"/>
+                        <Label Text="Notify?" VerticalOptions="Center"/>
+                    <CheckBox x:Name="chkAENotify" CheckedChanged="chkAENotify_CheckedChanged" Color="#327da9"/>
+                    </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="10,-10,0,10" IsVisible="{Binding type, Converter={StaticResource ShowOA}}">
+                        <Label Text="Duration: " VerticalOptions="Center"/>
+                        <Entry x:Name="Duration" WidthRequest="80" Text="2" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Keyboard="Numeric"  IsEnabled="True"/>
+                        <C868:FixedPicker x:Name="fpDurationPicker" WidthRequest="120" HorizontalTextAlignment="Center">
+                            <C868:FixedPicker.Items>
+                                <x:String>Hours</x:String>
+                                <x:String>Minutes</x:String>
+                            </C868:FixedPicker.Items>
+                            <C868:FixedPicker.SelectedIndex>0</C868:FixedPicker.SelectedIndex>
+                        </C868:FixedPicker>
+                        <Label Text="Notify? " VerticalOptions="Center"/>
+                    <CheckBox x:Name="chkObjNotify" CheckedChanged="chkObjNotify_CheckedChanged" Color="#327da9"/>
+                    </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="4" Padding="5,0,5,5" VerticalOptions="End">
+                <Button Text="Delete" WidthRequest="110" HeightRequest="45" CornerRadius="30" HorizontalOptions="Start" Clicked="ButtonDelete_Clicked"/>
+                <Label Text="" HorizontalOptions="CenterAndExpand"/>
+                <Button Text="Save" WidthRequest="110" HeightRequest="45" CornerRadius="30" HorizontalOptions="End" Clicked="ButtonSave_Clicked"/>
+            </StackLayout>
+                
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

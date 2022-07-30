@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.MenuPage"
+             x:Name="Menu"
+             Title="Menu">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>    
+
+            <Grid>
+                <Grid.RowDefinitions>
+                <RowDefinition Height=".15*"/>
+                <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+            <BoxView BackgroundColor="#003057" Grid.Row="0"/>
+            <Grid Grid.Row="1" Padding="25, 0, 25, 25" VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <StackLayout Grid.Row="0" Spacing="20" VerticalOptions="StartAndExpand">
+                        <StackLayout.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="Frame">
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                    <Setter Property="BorderColor" Value="#327da9"/>
+                                    <Setter Property="CornerRadius" Value="0" />
+                                    <Setter Property="Padding" Value="10" />                                    
+                                </Style>
+                        </ResourceDictionary>
+                        </StackLayout.Resources>                    
+                    <Frame VerticalOptions="Start" x:Name="Search">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Menu},Path=OpenSearchCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference Search}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0,0,0,5">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Search" FontAttributes="Bold,Italic"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Frame>
+                    <Frame VerticalOptions="Start" x:Name="Reports">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Menu},Path=OpenReportsCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference Reports}}"/>
+                        </Frame.GestureRecognizers>
+                        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0,0,0,5">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Open Reports" FontAttributes="Bold,Italic"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Frame>
+                    </StackLayout>
+                <Label Grid.Row="0" Text=">" FontSize="Large" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                <StackLayout Grid.Row="1" VerticalOptions="EndAndExpand">
+                    <Label Text="Michael LaBruyere via WGU circa 2022" FontAttributes="Italic" FontSize="Small"/>
+                </StackLayout>
+                </Grid>
+
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.AccordionView"
+             x:Name="AccordionViewControl">
+        <ContentView.Content>
+        <Frame BorderColor="{Binding Source={x:Reference AccordionViewControl}, Path=BorderColor}" BackgroundColor="Transparent" Padding="0" VerticalOptions="FillAndExpand">
+            <StackLayout Padding="0" Spacing="0">
+                <Frame BorderColor="{Binding Source={x:Reference AccordionViewControl}, Path=BorderColor}" BackgroundColor="#003057">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TitleTapped"/>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=BindingContext.EditTermCommand}" CommandParameter="{Binding ID}" NumberOfTapsRequired="2"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout BackgroundColor="{Binding Source={x:Reference AccordionViewControl}, Path=HeaderBackgroundColor}">
+                        <StackLayout Orientation="Horizontal" >
+                        <Label FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0" Text="{Binding Source={x:Reference AccordionViewControl}, Path=Title}" TextColor="White"/>
+                            <Label Text="{Binding Source={x:Reference AccordionViewControl}, Path=CenterText}"  VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                            <Label FontSize="Header" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold,Italic" Opacity=".65" TextColor="White">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Source={x:Reference AccordionViewControl}, Path=CenterLeft}"/>
+                                    <Span Text="{Binding Source={x:Reference AccordionViewControl}, Path=Center}"/>
+                                    <Span Text="{Binding Source={x:Reference AccordionViewControl}, Path=CenterRight}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <ContentView x:Name="Indicator" Content="{Binding Source={x:Reference AccordionViewControl}, Path=IndicatorView}" HorizontalOptions="End" VerticalOptions="Center"/>
+                        </StackLayout>
+                    
+                </StackLayout>
+            </Frame>
+                <Frame BorderColor="#327da9" BackgroundColor="Transparent" x:Name="contentView" Margin="0,-12,0,10">
+            <ContentView x:Name="contentView2" Content="{Binding Source={x:Reference AccordionViewControl}, Path=AccordionContentView}" Margin="10,0,10,15" VerticalOptions="Start"/>
+                </Frame>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

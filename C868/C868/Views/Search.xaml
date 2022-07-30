@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C868.Views.Search">
+    <ContentPage.Content>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" BackgroundColor="#003057" Padding="5" CornerRadius="0">
+                <Label Text="Search" FontSize="36" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" TextColor="White"/>
+            </Frame>
+            <StackLayout Grid.Row="1">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Search Term: " FontSize="Medium" VerticalOptions="Center"/>
+                    <Entry x:Name="txtSearch" MinimumWidthRequest="150" WidthRequest="300" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Padding="0" Spacing="0" HorizontalOptions="FillAndExpand">
+                    <Label Text="Term" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start"/>
+                    <CheckBox x:Name="chkTerm" Color="#327da9" HorizontalOptions="Start" IsChecked="True"/>
+                    <Label HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Course" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Center"/>
+                    <CheckBox x:Name="chkCourse" Color="#327da9" HorizontalOptions="Center" IsChecked="True"/>
+                    <Label HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Assessment" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="End"/>
+                    <CheckBox x:Name="chkAssessment" Color="#327da9" HorizontalOptions="End" IsChecked="True"/>
+                </StackLayout>
+                <Frame VerticalOptions="End" x:Name="SearchButton" HorizontalOptions="Center" BorderColor="#003057" CornerRadius="5" MinimumWidthRequest="75" WidthRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchClickCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding Source={x:Reference SearchButton}}"/>
+                    </Frame.GestureRecognizers>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0,0,0,5" FontSize="Title">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Search" FontAttributes="Bold,Italic"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Frame>
+                <Frame HorizontalOptions="FillAndExpand" BorderColor="#003057">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="Item Name" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="Start" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="End" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="Status (opt)" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <ListView ItemsSource="{Binding searchData}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                    <Label Text="{Binding [0]}"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [1], StringFormat='{}{0:MM/dd/yy}'}"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [2], StringFormat='{}{0:MM/dd/yy hh:mm tt}'}"/>
+                                    <Label Text="|" FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label Text="{Binding [3]}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
